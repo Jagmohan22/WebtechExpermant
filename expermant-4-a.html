@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myapp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Validation</title>
+    <style>
+      input,
+      textarea {
+        outline: none;
+      }
+
+      input.ng-invalid,
+      textarea.ng-invalid {
+        border: 2px red solid;
+      }
+
+      input.ng-valid,
+      textarea.ng-valid {
+        border: 2px solid green;
+      }
+      .in {
+        border: 2px solid red !important;
+      }
+
+      .in-text {
+        border: 2px solid red !important;
+      }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <script>
+      const app = angular.module("myapp", []);
+      app.controller("myctr", function ($scope) {
+        $scope.validateCnumber = function () {
+          const numberPattern = /^[0-9]*$/;
+          if (numberPattern.test($scope.cnumber)) {
+            return true;
+          }
+          return false;
+        };
+
+        $scope.length = function () {
+          let length = $scope.address;
+          if (length == 0) {
+            document.getElementById("address").classList.add("in-text");
+          } else {
+            document.getElementById("address").classList.remove("in-text");
+            console.log(length.length);
+          }
+        };
+
+        $scope.check = function () {
+          let name = $scope.name;
+          let email = $scope.email;
+          let gender = $scope.gender;
+          let address = $scope.address;
+          let connumber = $scope.cnumber;
+          if (!name || !email || !gender || !address || !connumber) {
+            alert("you don't fill all requerd thing");
+          } else {
+            alert("you fill all requerd thing");
+            window.location.href = "ind.html";
+          }
+        };
+
+        $scope.onChnage = function () {
+          let number = $scope.cnumber;
+          if (number.length > 10) {
+            document.getElementById("cnumber").classList.add("in");
+          } else {
+            document.getElementById("cnumber").classList.remove("in");
+          }
+        };
+      });
+    </script>
+  </head>
+  <body ng-controller="myctr">
+    <div>
+      <form>
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          ng-model="name"
+          name="name"
+          placeholder="Enter your name"
+          ng-pattern="/^[a-zA-Z\s]*$/"
+          ng-class="{ 'valid': name.match(/^[a-zA-Z\s]*$/), 'invalid': !name.match(/^[a-zA-Z\s]*$/) && name.length > 0 }"
+        /><br /><br />
+
+        <label for="email">Gmail</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          ng-model="email"
+          placeholder="******@gmail.com"
+          ng-pattern="/^[a-zA-Z0-9._%+-]+@gmail\.com$/"
+          ng-class="{ 'valid' : email.match(/^[a-zA-Z0-9._%+-]+@gmail\.com$/), 'invalid': !email.match(/^[a-zA-Z0-9._%+-]+@gmail\.com$/)}"
+        /><br /><br />
+
+        <label for="gender" id="gender"
+          ><span>Gender</span> : Male<input
+            type="radio"
+            id="male"
+            name="gender"
+            value="male"
+            ng-model="gender"
+          />
+          Female<input
+            type="radio"
+            id="female"
+            name="gender"
+            value="femail"
+            ng-model="gender"
+          />
+          other<input
+            type="radio"
+            id="other"
+            name="gender"
+            value="other"
+            ng-model="gender"
+          /> </label
+        ><br /><br />
+
+        <textarea
+          id="address"
+          name="address"
+          ng-model="address"
+          ng-change="length()"
+          class="in-text"
+          rows="3"
+          cols="30"
+          placeholder="address"
+          ng-class="{ 'valid': address.length !=0  , 'invalid' : address.length ==0 }"
+          --
+        >
+      ></textarea
+        >
+        <br /><br />
+
+        <label for="Contact"
+          >Contact :
+          <select id="contact" name="contact" ng-model="contact">
+            <option value=""></option>
+            <option value="+91">+91</option>
+            <option value="+92">+92</option>
+            <option value="+93">+93</option>
+          </select>
+          <input
+            id="cnumber"
+            name="cnumber"
+            ng-change="onChnage()"
+            ng-model="cnumber"
+            ng-pattern="/^[0-9]*$/"
+            ng-class="{'valid': validateCnumber(), 'invalid': !validateCnumber()}"
+          /> </label
+        ><br /><br c/>
+        <button type="button" id="btn" name="btn" ng-click="check()">
+          submit
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

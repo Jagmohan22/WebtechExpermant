@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
+</head>
+<body ng-controller="cont">
+
+  <h1>Bill Payment Record</h1>
+
+  <form ng-submit="addBill()">
+    <label for="user-id">User Id:</label>
+    <input type="number" id="user-id" ng-model="userId" name="userId" placeholder="Enter the user id" required><br><br>
+    
+    <label for="user-name">User Name:</label>
+    <input type="text" id="user-name" ng-model="userName" name="userName" placeholder="Enter the user name" required><br><br>
+    
+    <label for="user-amount">User amount:</label>
+    <input type="number" id="user-amount" ng-model="userAmount" name="userAmount" placeholder="Enter the amount in Rupees" required><br><br>
+    
+    <label for="dueDate">Due Date:</label>
+    <input type="date" id="dueDate" ng-model="dueDate" name="dueDate" required><br><br>
+
+    <label for="status">Status:</label>
+    <select id="select" ng-model="select" required>
+      <option value="paid">Paid</option>
+      <option value="unpaid">Unpaid</option>
+    </select><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Bill Display</h2>
+  <table border="1">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+    <tr ng-repeat="bill in bills">
+      <td>{{bill.id}}</td>
+      <td>{{bill.username}}</td>
+      <td>{{bill.amount}}</td>
+      <td>{{bill.date | date}}</td>
+      <td>{{bill.status}}</td>
+      <td>
+        <button ng-click="editBill(bill)">Edit</button>
+        <button ng-click="deleteBill($index)">Delete</button>
+    </td>
+
+      
+    </tr>
+  </table>
+
+</body>
+</html>

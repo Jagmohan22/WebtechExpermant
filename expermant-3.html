@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular js table</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+    <style>
+      .even-row {
+        background-color: blue;
+      }
+      .odd-row {
+        background-color: green;
+      }
+    </style>
+    <script>
+      var tablesudents = angular.module("mytable", []);
+      tablesudents.controller("tableController", function ($scope) {
+        $scope.student = [
+          { name: "Jagmohan", roll: 25, course: "bca" },
+          { name: "arayan", roll: 28, course: "btech" },
+          { name: "ayush", roll: 22, course: "llb" },
+          { name: "dakash", roll: 30, course: "b.com" },
+          { name: "prangal", roll: 35, course: "lala" },
+        ];
+
+        $scope.orderByField = "name";
+        $scope.reversSort = false;
+      });
+    </script>
+  </head>
+
+  <body>
+    <div ng-app="mytable" ng-controller="tableController">
+      <label>Order BY</label>
+      <select ng-model="orderByField">
+        <option value="name">Name</option>
+        <option value="roll">Roll no</option>
+        <option value="course">Course</option>
+      </select>
+      <button ng-click="reverseSort = !reverseSort">
+        sort {{reverseSort ? 'Descending' : 'Ascending'}}
+      </button>
+
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Roll</th>
+            <th>Course</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            ng-repeat="student in student | orderBy:orderByField:reverseSort"
+            ng-class-odd=" 'odd-row' "
+            ng-class-even="'even-row' "
+          >
+            <td>{{student.name}}</td>
+            <td>{{student.roll}}</td>
+            <td>{{student.course}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
